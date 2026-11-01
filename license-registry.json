@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-01T20:53:31.955Z",
+  "updatedAt": "2026-11-01T20:53:50.252Z",
   "licenses": [
     {
       "id": "LIC-20261101-F78FFF",
       "key": "EAGLE-70E8-48EF-6DD1-7D31",
       "type": "Temporal",
       "expiresAt": "2026-12-28T05:59:00.000Z",
-      "status": "active",
+      "status": "revoked",
       "createdAt": "2026-11-01T20:53:31.580Z",
-      "updatedAt": "2026-11-01T20:53:31.580Z"
+      "updatedAt": "2026-11-01T20:53:50.067Z"
     }
   ]
 }
