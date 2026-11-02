@@ -1,5 +1,16 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02T22:31:41.587Z",
-  "licenses": []
+  "updatedAt": "2026-11-02T22:40:48.072Z",
+  "licenses": [
+    {
+      "id": "LIC-20261102-70DAE0",
+      "key": "EAGLE-B4CF-C080-C0D6-EDB6",
+      "type": "Android",
+      "expiresAt": null,
+      "durationHours": null,
+      "status": "active",
+      "createdAt": "2026-11-02T22:40:47.706Z",
+      "updatedAt": "2026-11-02T22:40:47.706Z"
+    }
+  ]
 }
