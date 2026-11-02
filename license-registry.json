@@ -1,16 +1,5 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02T22:30:04.919Z",
-  "licenses": [
-    {
-      "id": "LIC-20261102-4C3ABD",
-      "key": "EAGLE-E0EF-E85B-AA49-35E4",
-      "type": "Permanente",
-      "expiresAt": null,
-      "durationHours": null,
-      "status": "active",
-      "createdAt": "2026-11-02T08:42:48.442Z",
-      "updatedAt": "2026-11-02T22:28:48.007Z"
-    }
-  ]
+  "updatedAt": "2026-11-02T22:31:41.587Z",
+  "licenses": []
 }
