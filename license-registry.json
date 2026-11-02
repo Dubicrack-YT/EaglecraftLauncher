@@ -8,19 +8,9 @@
       "type": "Permanente",
       "expiresAt": null,
       "durationHours": null,
-      "status": "revoked",
+      "status": "active",
       "createdAt": "2026-11-02T08:42:48.442Z",
       "updatedAt": "2026-11-02T22:28:48.007Z"
-    },
-    {
-      "id": "LIC-20261102-24DE03",
-      "key": "EAGLE-2832-6C4A-0C13-4E3E",
-      "type": "Temporal",
-      "expiresAt": null,
-      "durationHours": null,
-      "status": "active",
-      "createdAt": "2026-11-02T22:30:04.518Z",
-      "updatedAt": "2026-11-02T22:30:04.518Z"
     }
   ]
 }
