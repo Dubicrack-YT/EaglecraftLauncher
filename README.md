@@ -1,32 +1,22 @@
-# Eaglecraft Launcher — activación automática por GitHub
+# Eaglecraft Launcher — panel central de licencias
 
-Este repositorio publica la política que usa el launcher para su **activación automática de sesión**:
+Panel personal en GitHub Pages: https://dubicrack-yt.github.io/EaglecraftLauncher/
 
-- [`activation-policy.json`](activation-policy.json): parámetros públicos, estado de activación, rango de validez y rotación UTC diaria.
-- [`generate_activation.py`](generate_activation.py): implementación de referencia para generar el código del día.
+El panel empieza vacío. No requiere inicio de sesión para abrir ni leer el registro. Para crear, editar, revocar/reactivar o borrar licencias, introduce un token personal de GitHub limitado a este repositorio con permiso **Contents: Read and write**. El token solo se usa en memoria; nunca se incluye en el sitio ni en el JSON.
 
-## Generar el código del día
+## Registro y claves
 
-Con Python 3:
+`license-registry.json` comienza con `schemaVersion: 1` y `licenses: []`; no contiene las claves del sistema anterior. El panel permite establecer ID, tipo y vencimiento como fecha/hora fija, duración en horas desde el primer uso, ambos o ninguno. En la tabla solo se muestran los últimos cuatro caracteres de cada clave.
 
-```bash
-python3 generate_activation.py
+Cada fila puede descargar un archivo `<ID>.eagkey` de texto plano con estas dos líneas exactas:
+
+```text
+ID=<id>
+KEY=<clave>
 ```
 
-Para comprobar una fecha concreta:
+Para preconfigurar una compilación personal, renombra el archivo a `product.eagkey`, ponlo junto a `build_launcher.py` y vuelve a compilar. Si no existe ese archivo al compilar, el launcher permite introducir una clave en Ajustes, pero necesita que el registro online la valide.
 
-```bash
-python3 generate_activation.py --date 2026-10-16
-```
+## Transparencia y límites
 
-El algoritmo calcula SHA-256 sobre los campos `format`, `version`, `application_id`, `public_seed` y la fecha UTC (`YYYY-MM-DD`), en ese orden y separados por `|`. Usa los primeros 16 dígitos hexadecimales, en mayúsculas, agrupados de cuatro, después del prefijo definido por la política. El launcher obtiene el JSON desde la rama principal por HTTPS, verifica sus campos y deriva el mismo código para el día actual.
-
-El código automático **solo se mantiene en `sessionStorage`** del launcher y se vuelve a solicitar a GitHub al abrirlo. Si no se puede leer la política por falta de Internet, la activación automática no se concede. Al cerrar la sesión del navegador/WebView, la sesión temporal se pierde. Si el propietario deshabilita la política o cambia los parámetros, el launcher deja de aceptar el código generado anteriormente.
-
-## Códigos manuales
-
-Los 20 códigos manuales existentes se mantienen en el launcher, separados en 10 permanentes y 10 temporales. Este mecanismo es independiente de la activación automática de GitHub.
-
-## Alcance y seguridad
-
-La política y el algoritmo son públicos y no están cifrados. Cualquier persona puede leerlos y reproducir el código diario. Este sistema sirve como control sencillo de acceso y como requisito de conexión, **no** como licencia segura, protección contra manipulación del HTML ni control global de uso único. El repositorio no almacena claves privadas ni tokens de GitHub.
+El repositorio es **público**. Cualquier licencia que se cree después podrá consultarse sin inicio de sesión en `license-registry.json`; revocarla no vuelve privados los commits anteriores. Los `.eagkey` exportados también contienen la clave en texto plano. Las comprobaciones del launcher ocurren en código cliente y pueden alterarse; esto es un control sencillo para uso personal, no un sistema de licencias seguro. No subas tokens de GitHub a este repositorio.
