@@ -2,20 +2,20 @@
 
 Panel personal en GitHub Pages: https://dubicrack-yt.github.io/EaglecraftLauncher/
 
-El panel empieza vacío. No requiere inicio de sesión para abrir ni leer el registro. Para crear, editar, revocar/reactivar o borrar licencias, introduce un token personal de GitHub limitado a este repositorio con permiso **Contents: Read and write**. El token solo se usa en memoria; nunca se incluye en el sitio ni en el JSON.
+El registro se publicó inicialmente vacío; las licencias que el administrador agregue después se administran desde el panel. No requiere inicio de sesión para abrir ni leer el registro. Para crear, editar, revocar/reactivar o borrar licencias, introduce un token personal de GitHub limitado a este repositorio con permiso **Contents: Read and write**. El token solo se usa en memoria; nunca se incluye en el sitio ni en el JSON.
 
 ## Registro y claves
 
-`license-registry.json` comienza con `schemaVersion: 1` y `licenses: []`; no contiene las claves del sistema anterior. El panel permite establecer ID, tipo y vencimiento como fecha/hora fija, duración en horas desde el primer uso, ambos o ninguno. En la tabla solo se muestran los últimos cuatro caracteres de cada clave.
+`license-registry.json` se inicializó con `schemaVersion: 1` y `licenses: []`, sin migrar las claves del sistema anterior. El panel permite establecer ID, tipo y vencimiento como fecha/hora fija, duración en horas desde el primer uso, ambos o ninguno. En la tabla solo se muestran los últimos cuatro caracteres de cada clave.
 
-Cada fila puede descargar un archivo `<ID>.eagkey` de texto plano con estas dos líneas exactas:
+Cada fila puede descargar directamente `product.eagkey`, un archivo de texto plano con estas dos líneas exactas:
 
 ```text
 ID=<id>
 KEY=<clave>
 ```
 
-Para preconfigurar una compilación personal, renombra el archivo a `product.eagkey`, ponlo junto a `build_launcher.py` y vuelve a compilar. Si no existe ese archivo al compilar, el launcher permite introducir una clave en Ajustes, pero necesita que el registro online la valide.
+Para preconfigurar el launcher, coloca `product.eagkey` junto a `launcher.html` o `index.html`. El launcher lo detecta al abrir, bloquea el cambio de clave y no requiere recompilar ni incrustar el archivo. Si no existe, Ajustes permite introducir una clave que necesita validación online. Algunos navegadores bloquean la lectura automática de archivos vecinos bajo `file://`; en ese caso, el launcher permite seleccionar el archivo en Ajustes o confirmar que no existe.
 
 ## Transparencia y límites
 
