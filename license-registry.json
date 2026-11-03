@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02T23:20:56.108Z",
+  "updatedAt": "2026-11-03T07:11:01.543Z",
   "licenses": [
     {
       "id": "LIC-20261102-70DAE0",
@@ -8,9 +8,9 @@
       "type": "Android",
       "expiresAt": null,
       "durationHours": null,
-      "status": "active",
+      "status": "revoked",
       "createdAt": "2026-11-02T22:40:47.706Z",
-      "updatedAt": "2026-11-02T22:40:47.706Z"
+      "updatedAt": "2026-11-03T07:11:00.906Z"
     },
     {
       "id": "LIC-20261102-ED00AE",
