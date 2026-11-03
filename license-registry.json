@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-03T07:14:35.654Z",
+  "updatedAt": "2026-11-03T07:19:54.328Z",
   "licenses": [
     {
       "id": "LIC-20261102-70DAE0",
@@ -11,16 +11,6 @@
       "status": "active",
       "createdAt": "2026-11-02T22:40:47.706Z",
       "updatedAt": "2026-11-03T07:14:35.084Z"
-    },
-    {
-      "id": "LIC-20261102-ED00AE",
-      "key": "EAGLE-89EB-0A90-0653-2F4E",
-      "type": "Windows",
-      "expiresAt": null,
-      "durationHours": null,
-      "status": "active",
-      "createdAt": "2026-11-02T23:20:55.699Z",
-      "updatedAt": "2026-11-02T23:20:55.699Z"
     }
   ]
 }
