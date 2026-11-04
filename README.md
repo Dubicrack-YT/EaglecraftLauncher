@@ -1,22 +1,28 @@
-# Eaglecraft Launcher — panel central de licencias
+# Eaglecraft Launcher y panel central de licencias
 
-Panel personal en GitHub Pages: https://dubicrack-yt.github.io/EaglecraftLauncher/
+Panel personal: <https://dubicrack-yt.github.io/EaglecraftLauncher/>. El panel permite crear, editar, revocar/reactivar y borrar licencias. La lectura es pública; para escribir, el administrador introduce un token de GitHub con permiso **Contents: Read and write** limitado a este repositorio. El panel no almacena ni publica el token. El registro se publicó inicialmente vacío; las licencias añadidas después se conservan en `license-registry.json` y son visibles públicamente.
 
-El registro se publicó inicialmente vacío; las licencias que el administrador agregue después se administran desde el panel. No requiere inicio de sesión para abrir ni leer el registro. Para crear, editar, revocar/reactivar o borrar licencias, introduce un token personal de GitHub limitado a este repositorio con permiso **Contents: Read and write**. El token solo se usa en memoria; nunca se incluye en el sitio ni en el JSON.
+## Launcher ligero
 
-## Registro y claves
+La entrada remota del launcher es [`launcher/index.html`](launcher/index.html). Es un loader pequeño, no contiene los juegos completos. Al abrirlo consulta [`launcher/manifest.json`](launcher/manifest.json), presenta las versiones de más nueva a más antigua y descarga solo la versión seleccionada. Las versiones completas se guardan en el almacenamiento local del navegador o APK (IndexedDB) para abrirlas sin conexión después de descargarlas. El botón flotante «Volver al launcher» retorna desde el juego sin atajo de teclado.
 
-`license-registry.json` se inicializó con `schemaVersion: 1` y `licenses: []`, sin migrar las claves del sistema anterior. El panel permite establecer ID, tipo y vencimiento como fecha/hora fija, duración en horas desde el primer uso, ambos o ninguno. En la tabla solo se muestran los últimos cuatro caracteres de cada clave.
+Para actualizar una versión ya guardada, elimínala desde el launcher y vuelve a descargarla. El modo offline de Desarrollador utiliza el catálogo, los juegos guardados y una última validación de licencia; no puede saber si una licencia fue revocada después. La validación normal requiere Internet al iniciar y al jugar.
 
-Cada fila puede descargar directamente `product.eagkey`, un archivo de texto plano con estas dos líneas exactas:
+## Añadir versiones sin reconstruir la APK
+
+1. Sube el HTML completo bajo `launcher/games/<carpeta>/<archivo>.html`.
+2. Agrega una entrada al arreglo `versions` de `launcher/manifest.json`, con ID único, `displayName`, `edition`, `tag`, `version`, tamaño exacto en `sizeBytes` y `path` relativo, por ejemplo `games/<carpeta>/<archivo>.html`.
+3. Conserva el orden de más nueva a más antigua. El loader consulta el catálogo al abrir; no se recompila `index.html` ni se genera otra APK.
+
+## Licencias y archivo `.eagkey`
+
+En el panel, cada clave se muestra censurada salvo por sus últimos cuatro caracteres. Las filas permiten copiarla o descargar directamente `product.eagkey` como texto plano:
 
 ```text
 ID=<id>
 KEY=<clave>
 ```
 
-Para preconfigurar el launcher, coloca `product.eagkey` junto a `launcher.html` o `index.html`. El launcher lo detecta al abrir, bloquea el cambio de clave y no requiere recompilar ni incrustar el archivo. Si no existe, Ajustes permite introducir una clave que necesita validación online. Algunos navegadores bloquean la lectura automática de archivos vecinos bajo `file://`; en ese caso, el launcher permite seleccionar el archivo en Ajustes o confirmar que no existe.
+Coloca `product.eagkey` junto a una copia local de `index.html`. El launcher lo detecta en tiempo de ejecución y bloquea el cambio de clave; si no existe, permite introducir una clave manual. No se requiere compilación para cambiar o añadir licencias. Bajo `file://`, si el navegador impide leer archivos vecinos, el launcher permite seleccionar el archivo desde Ajustes o confirmar que no existe.
 
-## Transparencia y límites
-
-El repositorio es **público**. Cualquier licencia que se cree después podrá consultarse sin inicio de sesión en `license-registry.json`; revocarla no vuelve privados los commits anteriores. Los `.eagkey` exportados también contienen la clave en texto plano. Las comprobaciones del launcher ocurren en código cliente y pueden alterarse; esto es un control sencillo para uso personal, no un sistema de licencias seguro. No subas tokens de GitHub a este repositorio.
+El repositorio es público: tanto las licencias del JSON como cualquier archivo de juego que se publique aquí son accesibles para cualquiera. Los archivos `.eagkey` contienen la clave en texto plano y la validación del launcher se ejecuta en cliente; el sistema es para uso personal, no un control de licencias seguro. No subas tokens de GitHub a este repositorio.
