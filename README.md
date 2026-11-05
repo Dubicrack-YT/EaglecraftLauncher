@@ -4,9 +4,9 @@ Panel personal: <https://dubicrack-yt.github.io/EaglecraftLauncher/>. El panel p
 
 ## Launcher ligero
 
-La entrada remota del launcher es [`launcher/index.html`](launcher/index.html). Es un loader pequeño, no contiene los juegos completos. Al abrirlo consulta [`launcher/manifest.json`](launcher/manifest.json), presenta las versiones de más nueva a más antigua y descarga solo la versión seleccionada. Las versiones completas se guardan en el almacenamiento local del navegador o APK (IndexedDB) para abrirlas sin conexión después de descargarlas. El botón flotante «Volver al launcher» retorna desde el juego sin atajo de teclado.
+La entrada remota del launcher es [`launcher/index.html`](launcher/index.html). Es un loader pequeño, no contiene los juegos completos. Al abrirlo consulta [`launcher/manifest.json`](launcher/manifest.json), presenta las versiones de más nueva a más antigua y descarga solo la versión seleccionada. Las versiones completas se guardan en el almacenamiento local del navegador o APK (IndexedDB) para abrirlas sin conexión después de descargarlas. El botón «Salir» del overlay cierra la pestaña o app cuando el entorno lo permite. En Información se muestra la versión instalada y el enlace para descargar la actualización desde GitHub.
 
-Para actualizar una versión ya guardada, elimínala desde el launcher y vuelve a descargarla. El modo offline de Desarrollador utiliza el catálogo, los juegos guardados y una última validación de licencia; no puede saber si una licencia fue revocada después. La validación normal requiere Internet al iniciar y al jugar.
+Para actualizar una versión ya guardada, elimínala desde el launcher y vuelve a descargarla. Después de una validación online exitosa, el launcher conserva la autorización offline durante un máximo de 24 horas; al reconectar, consulta la vigencia en el registro y renueva ese plazo. Si la gracia vence sin conexión, el juego queda bloqueado hasta validar online.
 
 ## Añadir versiones sin reconstruir la APK
 

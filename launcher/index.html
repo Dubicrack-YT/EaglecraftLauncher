@@ -72,6 +72,41 @@ button,input,select{font:inherit}button{color:inherit}.app{min-height:100vh;min-
 .game-overlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
 .overlay-return{position:absolute;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));z-index:2;min-height:44px;opacity:.92;box-shadow:0 2px 14px #0009;touch-action:manipulation}
 @media(max-width:700px){.developer-top{display:block}.developer-disable{margin:4px 0 12px}.developer-option{padding:11px}.overlay-return{font-size:.8rem;padding:10px}}
+
+
+
+
+
+
+/* Eaglecraft compact launcher controls */
+.download-actions{display:flex;flex-direction:column;gap:6px;margin-top:10px;min-width:0}
+.download-button,.developer-disable,.overlay-return,.download-dialog-actions .side-btn{border:1px solid #617849;border-radius:8px;background:#27321f;color:#f2f2f2;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;touch-action:manipulation}
+.download-button:disabled{opacity:.5;cursor:wait}
+.download-status,.download-progress-text,.download-size{font-size:.82rem;color:#b7c0ad;line-height:1.35}
+.download-progress{display:block;width:100%;height:10px;margin:18px 0 8px;accent-color:#8bb65b}
+.settings-tabs{display:flex;justify-content:flex-start;gap:10px;flex-wrap:wrap}
+.developer-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.developer-disable{background:#47251f;border-color:#895042}
+.developer-options{display:flex;flex-direction:column;gap:10px;margin:18px 0}
+.developer-option{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px;border:1px solid var(--line);border-radius:10px;background:#1b1e22}
+.developer-option span{display:grid;gap:5px}.developer-option small{color:#aeb6aa;line-height:1.35}
+.developer-option input{width:22px;height:22px;accent-color:#8bb65b;flex:none}
+.developer-import{border-top:1px solid var(--line);padding-top:16px}.developer-notice{min-height:1.4em;color:#bfdc9c}
+.launcher-version-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px;color:#c6cbbf}
+.dev-unlock-trigger{color:#f0f0f0;font-size:.95rem;font-weight:800;background:transparent;border:0;padding:4px 2px;cursor:default}
+.launcher-update-status{color:#a8ce77;font-size:.82rem;font-weight:700}
+.launcher-update-link{color:#b9db8a;font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
+.download-modal{position:fixed;inset:0;z-index:10010;display:flex;align-items:center;justify-content:center;padding:18px;background:#000b;backdrop-filter:blur(3px)}
+.download-modal.hidden{display:none}
+.download-dialog{width:min(440px,100%);padding:22px;border:1px solid #4b5942;border-radius:14px;background:#171a1d;box-shadow:0 20px 70px #000b}
+.download-dialog h2{margin:0 0 10px;font-size:1.15rem;overflow-wrap:anywhere}
+.download-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.download-dialog-actions .side-btn{min-width:100px;background:#24292c;border-color:#4b5356}
+.download-dialog-actions .hidden{display:none!important}
+.game-overlay{position:fixed;inset:0;z-index:9999;background:#000}
+.game-overlay iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.overlay-return{position:absolute;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));z-index:2;min-height:44px;opacity:.92;box-shadow:0 2px 14px #0009}
+@media(max-width:700px){.developer-top{display:block}.developer-disable{margin:10px 0 12px}.developer-option{padding:11px}.download-dialog{padding:18px}.download-dialog-actions .side-btn{min-height:44px}.launcher-version-row{gap:8px}}
 </style>
 </head>
 <body>
@@ -88,16 +123,16 @@ button,input,select{font:inherit}button{color:inherit}.app{min-height:100vh;min-
   <header class="topbar" aria-hidden="true"></header>
   <div class="main-inner">
     <section id="libraryView" class="view">
-    <div><div class="welcome">BIBLIOTECA DE JUEGOS</div><h1 class="title">Instancias</h1><p class="subtitle">Selecciona una versión para ver sus detalles y jugar.</p></div>
+    <div><div class="welcome">BIBLIOTECA DE JUEGOS</div><h1 class="title">Instancias</h1></div>
     <section class="play-panel" aria-live="polite">
       <div class="instance-meta"><span class="pill" id="selectedTag">INSTANCIA</span><h2 class="selected-name" id="selectedName"></h2><div class="selected-edition" id="selectedEdition"></div></div>
-      <div class="play-action"><button class="launch" id="launch">Jugar</button><div class="locked-note" id="launchNote"></div><div class="download-actions"><button id="downloadGame" class="download-button" type="button">Descargar versión</button><div id="downloadStatus" class="download-status">Cargando catálogo de GitHub…</div><div id="downloadProgress" class="hidden"><progress id="downloadProgressBar" class="download-progress" max="100" value="0"></progress><div id="downloadProgressText" class="download-progress-text"></div></div></div></div>
+      <div class="play-action"><button class="launch" id="launch">Jugar</button><div class="locked-note" id="launchNote"></div><div class="download-actions"><button id="downloadGame" class="download-button" type="button">Descargar versión</button><div id="downloadStatus" class="download-status">Cargando versiones…</div></div></div></div>
     </section>
     <section class="version-box">
       <div class="row-head"><h2>Seleccionar instancia</h2><span class="count" id="gameCount"></span></div>
       <button class="dropdown-toggle" id="dropdownToggle" aria-expanded="false" aria-controls="instanceList"><span class="current-choice"><strong id="dropdownName"></strong><small id="dropdownEdition"></small></span><span class="chevron">⌄</span></button>
       <div class="instance-list hidden" id="instanceList" role="listbox" aria-label="Versiones disponibles"></div>
-      <p class="inline-note">Abre el desplegable para ver todas las versiones disponibles.</p>
+
     </section>
     <section class="activation-card" id="activationCard"><div><h2 id="activationTitle">Launcher en modo de vista</h2><p id="activationDescription">Puedes explorar las instancias. Activa para habilitar el botón Jugar.</p><div id="autoActivationProgress" class="auto-activation-progress hidden" role="status" aria-live="polite"><span id="autoActivationMessage">Conectando con GitHub…</span><span class="windows-spinner" aria-hidden="true"></span></div></div><button class="activate-btn" id="openSettings">Ajustes</button></section>
     <footer class="foot">Proyecto local no oficial. Minecraft es una marca de Mojang/Microsoft; Eaglecraft no está afiliado con ellos.</footer>
@@ -106,27 +141,39 @@ button,input,select{font:inherit}button{color:inherit}.app{min-height:100vh;min-
     <section id="settingsView" class="settings-view hidden">
       <header class="settings-heading"><div><div class="welcome">CONFIGURACIÓN</div><h1 class="title">Ajustes</h1></div><button id="backToLauncher" class="settings-back">Volver a instancias</button></header>
       <nav class="settings-tabs" role="tablist" aria-label="Pestañas de ajustes"><button id="settingsTabActivation" class="settings-tab active" role="tab" aria-selected="true" aria-controls="settingsActivationPanel">Activación</button><button id="settingsTabDeveloper" class="settings-tab hidden" role="tab" aria-selected="false" aria-controls="settingsDeveloperPanel">Desarrollador</button><button id="settingsTabInfo" class="settings-tab settings-tab-info" role="tab" aria-selected="false" aria-controls="settingsInfoPanel">Información</button></nav>
-      <section id="settingsActivationPanel" class="settings-panel" role="tabpanel" aria-labelledby="settingsTabActivation"><h2>Gestión de activación</h2><p class="settings-intro">El launcher busca product.eagkey junto a este HTML. Las versiones se descargan cuando las eliges y quedan guardadas en este dispositivo.</p><div class="activation-details"><div class="activation-detail"><span>Estado</span><strong id="activationState">Inactiva</strong></div><div class="activation-detail"><span>Tipo</span><strong id="activationMode">—</strong></div><div class="activation-detail"><span>ID de licencia</span><strong id="activationId">—</strong></div><div class="activation-detail"><span>Vigencia</span><strong id="activationExpiry">—</strong></div><div class="activation-detail"><span>Clave</span><strong id="activationKey" aria-label="Clave de activación enmascarada">—</strong></div></div><div class="settings-actions"><button id="settingsEnterCode" class="activate-btn">Ingresar o cambiar clave</button><button id="settingsDeactivate" class="settings-danger hidden">Desactivar activación</button></div><div id="productLicenseHelp" class="hidden" role="status" aria-live="polite" style="margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#1a1d21"><p id="productLicenseMessage" class="settings-intro" style="margin-bottom:10px"></p><input id="productLicensePicker" type="file" accept=".eagkey,text/plain" hidden><div class="settings-actions"><button id="selectProductLicense" class="side-btn">Elegir archivo .eagkey</button><button id="continueWithoutProductLicense" class="side-btn hidden">Confirmar que no hay archivo</button></div></div></section>
+      <section id="settingsActivationPanel" class="settings-panel" role="tabpanel" aria-labelledby="settingsTabActivation"><h2>Gestión de activación</h2><div class="activation-details"><div class="activation-detail"><span>Estado</span><strong id="activationState">Inactiva</strong></div><div class="activation-detail"><span>Tipo</span><strong id="activationMode">—</strong></div><div class="activation-detail"><span>ID de licencia</span><strong id="activationId">—</strong></div><div class="activation-detail"><span>Vigencia</span><strong id="activationExpiry">—</strong></div><div class="activation-detail"><span>Clave</span><strong id="activationKey" aria-label="Clave de activación enmascarada">—</strong></div></div><div class="settings-actions"><button id="settingsEnterCode" class="activate-btn">Ingresar o cambiar clave</button><button id="settingsDeactivate" class="settings-danger hidden">Desactivar activación</button></div><div id="productLicenseHelp" class="hidden" role="status" aria-live="polite">
+  <p id="productLicenseMessage" class="hidden"></p>
+  <input id="productLicensePicker" type="file" accept=".eagkey,text/plain" hidden>
+  <div class="settings-actions"><button id="selectProductLicense" class="side-btn" type="button">Cargar licencia</button></div>
+</div></section>
       <section id="settingsDeveloperPanel" class="settings-panel hidden" role="tabpanel" aria-labelledby="settingsTabDeveloper">
-  <div class="developer-top"><div><h2>Opciones de desarrollador</h2><p class="settings-intro">Estas opciones solo afectan a este dispositivo y se restablecen al desactivarlas.</p></div>
+  <div class="developer-top"><h2>Opciones de desarrollador</h2>
   <button id="disableDeveloperMode" class="side-btn developer-disable">Desactivar opciones de desarrollador</button></div>
   <div class="developer-options">
-    <label class="developer-option"><span><strong>Omitir validación de licencia</strong><small>Permite abrir versiones ya descargadas sin validar una clave.</small></span><input id="devSkipLicense" type="checkbox"></label>
-    <label class="developer-option"><span><strong>Permitir cambiar una clave OEM</strong><small>Habilita el cambio manual aunque exista product.eagkey; el archivo no se modifica.</small></span><input id="devUnlockOEM" type="checkbox"></label>
-    <label class="developer-option"><span><strong>Modo sin conexión</strong><small>Usa únicamente versiones guardadas en este dispositivo.</small></span><input id="devOfflineOnly" type="checkbox"></label>
+    <label class="developer-option"><span><strong>Omitir validación</strong><small>Permite abrir juegos guardados.</small></span><input id="devSkipLicense" type="checkbox"></label>
+    <label class="developer-option"><span><strong>Editar licencia fija</strong><small>Permite cambiar una clave bloqueada.</small></span><input id="devUnlockOEM" type="checkbox"></label>
+    <label class="developer-option"><span><strong>Modo sin conexión</strong><small>Usa solo datos guardados.</small></span><input id="devOfflineOnly" type="checkbox"></label>
   </div>
-  <div class="developer-import"><h3>Añadir un juego local</h3><p class="settings-intro">Importa un archivo .html para guardarlo y abrirlo incluso sin conexión.</p>
-  <input id="localGamePicker" type="file" accept=".html,.htm,text/html" hidden><button id="importLocalGame" class="side-btn">Importar HTML de juego</button></div>
+  <div class="developer-import"><h3>Añadir juego local</h3>
+  <input id="localGamePicker" type="file" accept=".html,.htm,text/html" hidden><button id="importLocalGame" class="side-btn">Importar HTML</button></div>
   <p id="developerNotice" class="developer-notice" role="status" aria-live="polite"></p>
-</section><section id="settingsInfoPanel" class="settings-panel hidden" role="tabpanel" aria-labelledby="settingsTabInfo"><h2>Información del dispositivo</h2><button id="devUnlockTrigger" class="dev-unlock-trigger" type="button" aria-label="Versión del launcher">Eaglecraft Launcher · build modular</button><p class="settings-intro">Datos básicos del navegador y de esta instalación local. No se obtiene el número de serie del dispositivo.</p><div class="activation-details device-details"><div class="activation-detail"><span>ID local</span><strong id="deviceId">—</strong></div><div class="activation-detail"><span>Sistema</span><strong id="deviceSystem">—</strong></div><div class="activation-detail"><span>Navegador</span><strong id="deviceBrowser">—</strong></div><div class="activation-detail"><span>Pantalla y orientación</span><strong id="deviceScreen">—</strong></div><div class="activation-detail"><span>Idioma</span><strong id="deviceLanguage">—</strong></div><div class="activation-detail"><span>Zona horaria</span><strong id="deviceTimezone">—</strong></div></div><p class="device-note">El ID se genera localmente y puede cambiar si se borran los datos del navegador o de la app.</p></section>
+</section><section id="settingsInfoPanel" class="settings-panel hidden" role="tabpanel" aria-labelledby="settingsTabInfo">
+  <div class="launcher-version-row"><span>Versión</span><button id="devUnlockTrigger" class="dev-unlock-trigger" type="button" aria-label="Versión del launcher"><span id="launcherVersion">1.0.1</span></button><span id="launcherUpdateStatus" class="launcher-update-status hidden" role="status"></span><a id="launcherUpdateLink" class="launcher-update-link" href="https://github.com/Dubicrack-YT/EaglecraftLauncher/raw/refs/heads/main/launcher/index.html" target="_blank" rel="noopener">Descargar desde GitHub</a></div>
+  <h2>Información del dispositivo</h2>
+  <div class="activation-details device-details"><div class="activation-detail"><span>ID local</span><strong id="deviceId">—</strong></div><div class="activation-detail"><span>Sistema</span><strong id="deviceSystem">—</strong></div><div class="activation-detail"><span>Navegador</span><strong id="deviceBrowser">—</strong></div><div class="activation-detail"><span>Pantalla y orientación</span><strong id="deviceScreen">—</strong></div><div class="activation-detail"><span>Idioma</span><strong id="deviceLanguage">—</strong></div><div class="activation-detail"><span>Zona horaria</span><strong id="deviceTimezone">—</strong></div></div>
+</section>
     </section>
   </div>
 <section id="gameOverlay" class="game-overlay hidden" aria-label="Juego">
   <iframe id="gameFrame" title="Juego" allow="fullscreen; gamepad; autoplay; clipboard-read; clipboard-write"></iframe>
-  <button id="closeGameOverlay" class="overlay-return" type="button" aria-label="Volver al launcher">Volver al launcher</button>
-</section></main>
+  <button id="closeGameOverlay" class="overlay-return" type="button" aria-label="Salir">Salir</button>
+</section><div id="downloadModal" class="download-modal hidden" role="dialog" aria-modal="true" aria-labelledby="downloadTitle">
+  <section class="download-dialog"><h2 id="downloadTitle">Descargando</h2><div class="download-size">Tamaño: <strong id="downloadExpectedSize">—</strong></div>
+  <progress id="downloadProgressBar" class="download-progress" max="100" value="0"></progress><div id="downloadProgressText" class="download-progress-text" role="status" aria-live="polite">0 KB</div>
+  <div class="download-dialog-actions"><button id="cancelDownload" class="side-btn" type="button">Cancelar</button><button id="closeDownloadModal" class="side-btn hidden" type="button">Cerrar</button></div></section>
+</div></main>
 </div>
-<div id="activationModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="activationHeading"><section class="dialog"><div class="dialog-head"><div><h2 id="activationHeading">Activar launcher</h2><p>La licencia product.eagkey se lee al abrir; no hace falta compilar. Si el navegador bloquea archivos locales, cárgala desde Ajustes.</p></div><button class="close" id="closeActivation" aria-label="Cerrar">×</button></div><label for="keyInput">Clave de activación</label><input type="text" id="keyInput" autocomplete="off" autocapitalize="characters" placeholder="EAGLE-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"><div class="dialog-actions"><button class="side-btn" id="cancelActivation">Ahora no</button><button class="launch" id="submitActivation">Activar</button></div><div id="activationProgress" class="activation-progress" role="status" aria-live="polite"><span id="activationMessage">Preparando verificación…</span><span class="windows-spinner" aria-hidden="true"></span></div><p class="error" id="activationError"></p></section></div>
+<div id="activationModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="activationHeading"><section class="dialog"><div class="dialog-head"><div><h2 id="activationHeading">Activar launcher</h2></div><button class="close" id="closeActivation" aria-label="Cerrar">×</button></div><label for="keyInput">Clave de activación</label><input type="text" id="keyInput" autocomplete="off" autocapitalize="characters" placeholder="EAGLE-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"><div class="dialog-actions"><button class="side-btn" id="cancelActivation">Ahora no</button><button class="launch" id="submitActivation">Activar</button></div><div id="activationProgress" class="activation-progress" role="status" aria-live="polite"><span id="activationMessage">Preparando verificación…</span><span class="windows-spinner" aria-hidden="true"></span></div><p class="error" id="activationError"></p></section></div>
 <script>
 "use strict";
 
@@ -140,6 +187,10 @@ const LICENSE_REGISTRY_URL = "https://raw.githubusercontent.com/Dubicrack-YT/Eag
 const KEY_STORAGE = "eaglecraftLicenseCode";
 const FIRST_USE_PREFIX = "eaglecraftLicenseFirstUse:";
 const OFFLINE_LICENSE_SNAPSHOT = "eaglecraftLastValidLicense";
+const OFFLINE_GRACE_MS = 24 * 60 * 60 * 1000;
+const LAUNCHER_VERSION = "1.0.1";
+const LAUNCHER_DOWNLOAD_URL = "https://github.com/Dubicrack-YT/EaglecraftLauncher/raw/refs/heads/main/launcher/index.html";
+const NETWORK_TIMEOUT_MS = 8000;
 
 let selectedIndex = 0;
 let validationPending = false;
@@ -154,6 +205,7 @@ let currentGameObjectUrl = "";
 let localGameObjectUrl = "";
 let localGameRecord = null;
 let downloadInProgress = false;
+let downloadController = null;
 let devTapCount = 0;
 let devTapTimer = 0;
 
@@ -161,7 +213,7 @@ const $ = (id) => document.getElementById(id);
 let productLicenseData = null;
 let hasPackagedLicense = false;
 let productLicenseStatus = "checking";
-let productLicenseMessage = "Buscando product.eagkey junto al launcher…";
+let productLicenseMessage = "";
 
 function parseProductLicenseText(text) {
   const fields = Object.create(null);
@@ -181,19 +233,20 @@ function parseProductLicenseText(text) {
 function refreshProductLicenseHelp() {
   const help = $("productLicenseHelp");
   if (!help) return;
-  const needsHelp = productLicenseStatus === "unreadable" || productLicenseStatus === "invalid";
-  help.classList.toggle("hidden", !needsHelp);
-  $("productLicenseMessage").textContent = productLicenseMessage;
-  const continueButton = $("continueWithoutProductLicense");
-  if (continueButton) continueButton.classList.toggle("hidden", productLicenseStatus !== "unreadable");
+  const needsPicker = productLicenseStatus === "unreadable" && !hasPackagedLicense;
+  help.classList.toggle("hidden", !needsPicker);
+  const message = $("productLicenseMessage");
+  if (message) message.textContent = "";
+  const picker = $("selectProductLicense");
+  if (picker) picker.textContent = "Cargar licencia";
 }
 
 async function detectProductLicenseFile() {
   productLicenseStatus = "checking";
-  productLicenseMessage = "Buscando product.eagkey junto al launcher…";
+  productLicenseMessage = "";
   updateAccess();
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 3000);
+  const timeout = setTimeout(() => controller.abort(), 2500);
   try {
     const fileUrl = new URL(PRODUCT_LICENSE_PATH, document.baseURI);
     fileUrl.searchParams.set("t", String(Date.now()));
@@ -202,30 +255,34 @@ async function detectProductLicenseFile() {
       productLicenseData = null;
       hasPackagedLicense = false;
       productLicenseStatus = "missing";
-      productLicenseMessage = "No se encontró product.eagkey junto al launcher.";
+      productLicenseMessage = "";
     } else if (!response.ok) {
-      throw new Error(`El archivo respondió HTTP ${response.status}.`);
+      throw new Error("No se pudo leer la licencia.");
     } else {
       hasPackagedLicense = true;
       try {
         productLicenseData = parseProductLicenseText(await response.text());
         productLicenseStatus = "loaded";
-        productLicenseMessage = `Se detectó product.eagkey (ID ${productLicenseData.id}); la clave queda bloqueada.`;
-      } catch (error) {
+        productLicenseMessage = "";
+        licenseCheck = { status: "unverified", record: null, message: "" };
+        validationMessage = "";
+      } catch {
         productLicenseData = null;
         productLicenseStatus = "invalid";
-        productLicenseMessage = `Se detectó product.eagkey, pero su formato no es válido. La clave queda bloqueada. ${error instanceof Error ? error.message : ""}`;
+        productLicenseMessage = "Licencia fija no válida.";
         licenseCheck = { status: "file_error", record: null, message: productLicenseMessage };
         validationMessage = productLicenseMessage;
       }
     }
   } catch {
+    // Browsers may prohibit sibling-file reads under file://. Keep the launcher usable;
+    // an optional file picker is offered, but manual activation remains available.
     productLicenseData = null;
     hasPackagedLicense = false;
     productLicenseStatus = "unreadable";
-    productLicenseMessage = "El navegador no pudo comprobar product.eagkey automáticamente. Si existe, selecciónalo aquí; si no existe, confirma para usar una clave manual.";
-    licenseCheck = { status: "file_error", record: null, message: productLicenseMessage };
-    validationMessage = productLicenseMessage;
+    productLicenseMessage = "";
+    licenseCheck = { status: "none", record: null, message: "" };
+    validationMessage = "";
   } finally {
     clearTimeout(timeout);
     updateAccess();
@@ -235,46 +292,38 @@ async function detectProductLicenseFile() {
 async function loadSelectedProductLicense(file) {
   if (!file) return;
   if (!/\.eagkey$/i.test(file.name)) {
+    hasPackagedLicense = false;
+    productLicenseData = null;
     productLicenseStatus = "unreadable";
-    productLicenseMessage = "Selecciona un archivo con extensión .eagkey; si no hay uno junto al launcher, confirma para usar una clave manual.";
+    productLicenseMessage = "";
     updateAccess();
     return;
   }
   hasPackagedLicense = true;
   productLicenseData = null;
   productLicenseStatus = "invalid";
-  productLicenseMessage = `Se detectó ${file.name}; se está leyendo el archivo.`;
-  licenseCheck = { status: "file_error", record: null, message: productLicenseMessage };
-  validationMessage = productLicenseMessage;
+  productLicenseMessage = "";
+  licenseCheck = { status: "file_error", record: null, message: "Licencia fija no válida." };
+  validationMessage = "";
   updateAccess();
   try {
     productLicenseData = parseProductLicenseText(await file.text());
     productLicenseStatus = "loaded";
-    productLicenseMessage = `Se cargó ${file.name} (ID ${productLicenseData.id}); la clave queda bloqueada.`;
+    productLicenseMessage = "";
     licenseCheck = { status: "unverified", record: null, message: "" };
-    validationMessage = "Archivo .eagkey leído; comprobando la licencia online…";
+    validationMessage = "";
     updateAccess();
     await verifyConfiguredLicense();
-  } catch (error) {
+  } catch {
     productLicenseData = null;
     productLicenseStatus = "invalid";
-    productLicenseMessage = `El archivo .eagkey no tiene el formato esperado. La clave queda bloqueada. ${error instanceof Error ? error.message : ""}`;
+    productLicenseMessage = "Licencia fija no válida.";
     licenseCheck = { status: "file_error", record: null, message: productLicenseMessage };
     validationMessage = productLicenseMessage;
     updateAccess();
   }
 }
 
-function continueWithoutProductLicense() {
-  if (productLicenseStatus !== "unreadable") return;
-  productLicenseData = null;
-  hasPackagedLicense = false;
-  productLicenseStatus = "missing";
-  productLicenseMessage = "Se continuará sin archivo .eagkey; la clave manual requiere validación online.";
-  licenseCheck = { status: "none", record: null, message: productLicenseMessage };
-  validationMessage = "No hay una clave configurada. Ingresa una clave desde Ajustes.";
-  updateAccess();
-}
 
 function hasOEMKeyLock() {
   return hasPackagedLicense && !(devEnabled && devPrefs.unlockOEM);
@@ -343,50 +392,41 @@ function localFirstUse(record) {
 
 async function validateOnline(code) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 12000);
+  const timeout = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS);
   try {
     const response = await fetch(LICENSE_REGISTRY_URL + "?t=" + Date.now(), {
       cache: "no-store",
       headers: { Accept: "application/json" },
       signal: controller.signal,
     });
-    if (response.status === 404) return { status: "invalid", record: null, message: "La clave no aparece en el registro central." };
-    if (!response.ok) return { status: "offline", record: null, message: "GitHub no respondió correctamente. Conecta a Internet para volver a verificar." };
+    if (response.status === 404) return { status: "invalid", record: null, message: "La clave no aparece en el registro." };
+    if (!response.ok) return { status: "offline", record: null, message: "No se pudo actualizar la vigencia." };
     const registry = await response.json();
-    if (!registry || registry.schemaVersion !== 1 || !Array.isArray(registry.licenses)) return { status: "registry_error", record: null, message: "El registro central tiene un formato o versión inválidos." };
+    if (!registry || registry.schemaVersion !== 1 || !Array.isArray(registry.licenses)) return { status: "registry_error", record: null, message: "No se pudo verificar la licencia." };
     const matches = registry.licenses.filter((item) => String(item && item.key || "").trim().toUpperCase() === code);
-    if (!matches.length) return { status: "invalid", record: null, message: "La clave no aparece en el registro central." };
-    if (matches.length !== 1) return { status: "registry_error", record: null, message: "La clave aparece más de una vez en el registro central." };
+    if (!matches.length) return { status: "invalid", record: null, message: "La clave no aparece en el registro." };
+    if (matches.length !== 1) return { status: "registry_error", record: null, message: "No se pudo verificar la licencia." };
     const record = matches[0];
     if (!record || !record.id || !record.type || (record.status !== "active" && record.status !== "revoked")) {
-      return { status: "registry_error", record: null, message: "La licencia tiene campos obligatorios inválidos en el registro central." };
+      return { status: "registry_error", record: null, message: "No se pudo verificar la licencia." };
     }
-    if (record.status === "revoked") return { status: "revoked", record, message: "La licencia fue revocada desde el panel." };
+    if (record.status === "revoked") return { status: "revoked", record, message: "La licencia ya no está activa." };
     const durationHours = record.durationHours == null ? null : Number(record.durationHours);
-    if (durationHours !== null && (!Number.isFinite(durationHours) || durationHours <= 0)) {
-      return { status: "registry_error", record, message: "La duración de esta licencia no es válida en el registro central." };
-    }
+    if (durationHours !== null && (!Number.isFinite(durationHours) || durationHours <= 0)) return { status: "registry_error", record, message: "No se pudo verificar la licencia." };
     if (record.expiresAt != null && record.expiresAt !== "") {
-      if (typeof record.expiresAt !== "string") return { status: "registry_error", record, message: "La fecha de vencimiento de esta licencia no es válida." };
+      if (typeof record.expiresAt !== "string") return { status: "registry_error", record, message: "No se pudo verificar la licencia." };
       const expiry = Date.parse(record.expiresAt);
-      if (!Number.isFinite(expiry)) return { status: "registry_error", record, message: "La fecha de vencimiento de esta licencia no es válida." };
-      if (Date.now() >= expiry) return { status: "expired", record, message: "La licencia ya venció." };
+      if (!Number.isFinite(expiry)) return { status: "registry_error", record, message: "No se pudo verificar la licencia." };
+      if (Date.now() >= expiry) return { status: "expired", record, message: "La licencia venció." };
     }
     const firstUse = localFirstUse(record);
     if (!firstUse.ok) {
-      if (Number(record.durationHours) > 0 && firstUse.expiry && Date.now() >= firstUse.expiry) {
-        return { status: "expired", record, localExpiry: firstUse.expiry, message: "Venció la duración de esta licencia desde su primer uso en este dispositivo." };
-      }
-      if (Number(record.durationHours) > 0) return { status: "storage_error", record, message: "No se pudo guardar la fecha local de primer uso. Habilita el almacenamiento de la app e inténtalo de nuevo." };
+      if (Number(record.durationHours) > 0 && firstUse.expiry && Date.now() >= firstUse.expiry) return { status: "expired", record, localExpiry: firstUse.expiry, message: "La licencia venció." };
+      if (Number(record.durationHours) > 0) return { status: "storage_error", record, message: "No se pudo guardar la vigencia local." };
     }
-    return {
-      status: "valid",
-      record,
-      localExpiry: firstUse.expiry,
-      message: "Licencia verificada en el registro central.",
-    };
+    return { status: "valid", record, localExpiry: firstUse.expiry, checkedAt: Date.now(), message: "Licencia válida." };
   } catch {
-    return { status: "offline", record: null, message: "Sin conexión con GitHub. La clave se conservó, pero necesitas Internet para activar." };
+    return { status: "offline", record: null, message: "No se pudo actualizar la vigencia." };
   } finally {
     clearTimeout(timeout);
   }
@@ -394,11 +434,11 @@ async function validateOnline(code) {
 
 function saveOfflineLicenseSnapshot(code, result) {
   try {
-    if (result && result.status === "valid" && result.record) {
+    if (result && result.status === "valid" && result.record && !result.offline) {
       localStorage.setItem(OFFLINE_LICENSE_SNAPSHOT, JSON.stringify({ code, record: result.record, checkedAt: Date.now() }));
       return;
     }
-    if (result && ["expired", "revoked", "invalid"].includes(result.status)) {
+    if (result && ["expired", "revoked", "invalid", "registry_error", "storage_error"].includes(result.status)) {
       const stored = JSON.parse(localStorage.getItem(OFFLINE_LICENSE_SNAPSHOT) || "null");
       if (stored && stored.code === code) localStorage.removeItem(OFFLINE_LICENSE_SNAPSHOT);
     }
@@ -409,23 +449,28 @@ function getOfflineLicensePermit(code) {
   try {
     const snapshot = JSON.parse(localStorage.getItem(OFFLINE_LICENSE_SNAPSHOT) || "null");
     const record = snapshot && snapshot.record;
+    const now = Date.now();
+    const checkedAt = Number(snapshot && snapshot.checkedAt);
     if (!snapshot || snapshot.code !== code || !record || String(record.key || "").trim().toUpperCase() !== code || record.status !== "active") {
-      return { status: "offline", record: null, message: "No hay una validación anterior guardada para esta clave. Conéctate y valídala primero, o activa omitir validación en Desarrollador." };
+      return { status: "offline", record: null, message: "Conéctate para validar esta clave." };
+    }
+    if (!Number.isFinite(checkedAt) || checkedAt <= 0 || checkedAt > now + 5 * 60 * 1000 || now - checkedAt > OFFLINE_GRACE_MS) {
+      return { status: "offline", record: null, message: "La vigencia offline terminó. Conéctate para actualizarla." };
     }
     if (record.expiresAt != null && record.expiresAt !== "") {
-      if (typeof record.expiresAt !== "string" || !Number.isFinite(Date.parse(record.expiresAt))) return { status: "registry_error", record: null, message: "La fecha guardada de la licencia no es válida." };
-      if (Date.now() >= Date.parse(record.expiresAt)) return { status: "expired", record, message: "La licencia venció; el modo sin conexión no puede extenderla." };
+      if (typeof record.expiresAt !== "string" || !Number.isFinite(Date.parse(record.expiresAt))) return { status: "registry_error", record: null, message: "No se pudo comprobar la vigencia." };
+      if (now >= Date.parse(record.expiresAt)) return { status: "expired", record, message: "La licencia venció." };
     }
     const hours = record.durationHours == null ? null : Number(record.durationHours);
-    if (hours !== null && (!Number.isFinite(hours) || hours <= 0)) return { status: "registry_error", record: null, message: "La duración guardada de la licencia no es válida." };
+    if (hours !== null && (!Number.isFinite(hours) || hours <= 0)) return { status: "registry_error", record: null, message: "No se pudo comprobar la vigencia." };
     const firstUse = localFirstUse(record);
     if (!firstUse.ok) {
-      if (firstUse.expiry && Date.now() >= firstUse.expiry) return { status: "expired", record, localExpiry: firstUse.expiry, message: "Venció la duración local de esta licencia." };
-      return { status: "storage_error", record, message: "No se pudo comprobar el vencimiento local guardado." };
+      if (firstUse.expiry && now >= firstUse.expiry) return { status: "expired", record, localExpiry: firstUse.expiry, message: "La licencia venció." };
+      return { status: "storage_error", record, message: "No se pudo comprobar la vigencia." };
     }
-    return { status: "valid", record, localExpiry: firstUse.expiry, offline: true, checkedAt: snapshot.checkedAt, message: "Modo sin conexión: se usa la última validación guardada. No se detectan revocaciones nuevas." };
+    return { status: "valid", record, localExpiry: firstUse.expiry, offline: true, checkedAt, message: "Licencia activa sin conexión." };
   } catch {
-    return { status: "offline", record: null, message: "No se pudo leer el permiso local. Conéctate para volver a validar." };
+    return { status: "offline", record: null, message: "Conéctate para actualizar la vigencia." };
   }
 }
 
@@ -474,7 +519,7 @@ async function deleteGameCache(id) {
 async function loadStoredManifest() {
   try {
     const record = await readGameCache("__manifest__");
-    return record && Array.isArray(record.entries) ? record.entries : null;
+    return record && Array.isArray(record.entries) ? { entries: record.entries, launcherVersion: record.launcherVersion || "" } : null;
   } catch { return null; }
 }
 
@@ -496,26 +541,60 @@ function normalizeGames(entries) {
   });
 }
 
+function compareVersions(a, b) {
+  const left = String(a || "0").match(/\d+/g) || ["0"];
+  const right = String(b || "0").match(/\d+/g) || ["0"];
+  const length = Math.max(left.length, right.length);
+  for (let i = 0; i < length; i += 1) {
+    const x = Number(left[i] || 0);
+    const y = Number(right[i] || 0);
+    if (x !== y) return x > y ? 1 : -1;
+  }
+  return 0;
+}
+
+function updateLauncherVersion(remoteVersion) {
+  const current = $("launcherVersion");
+  const status = $("launcherUpdateStatus");
+  const link = $("launcherUpdateLink");
+  if (current) current.textContent = LAUNCHER_VERSION;
+  if (link) {
+    link.href = LAUNCHER_DOWNLOAD_URL;
+    link.download = "index.html";
+    link.textContent = "Descargar desde GitHub";
+  }
+  if (status) {
+    const hasUpdate = remoteVersion && compareVersions(remoteVersion, LAUNCHER_VERSION) > 0;
+    status.textContent = hasUpdate ? `Nueva versión ${remoteVersion} disponible` : "";
+    status.classList.toggle("hidden", !hasUpdate);
+    if (hasUpdate && link) link.textContent = `Descargar versión ${remoteVersion}`;
+  }
+}
+
 async function loadGameCatalog() {
   if (devEnabled && devPrefs.offlineOnly) {
     const stored = await loadStoredManifest();
-    if (!stored) throw new Error("Modo sin conexión: todavía no hay catálogo guardado. Desactiva este modo y conéctate una vez a Internet.");
-    games = normalizeGames(stored);
-    validationMessage = "Modo sin conexión: se usa el catálogo guardado en este dispositivo.";
+    if (!stored) throw new Error("Catálogo no disponible.");
+    games = normalizeGames(stored.entries);
+    updateLauncherVersion(stored.launcherVersion);
   } else {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS);
     try {
-      const response = await fetch(GAMES_MANIFEST_URL + "?t=" + Date.now(), { cache: "no-store" });
-      if (!response.ok) throw new Error(`GitHub respondió HTTP ${response.status}.`);
+      const response = await fetch(GAMES_MANIFEST_URL + "?t=" + Date.now(), { cache: "no-store", signal: controller.signal });
+      if (!response.ok) throw new Error("Catálogo no disponible.");
       const data = await response.json();
       const entries = Array.isArray(data) ? data : data.versions;
       games = normalizeGames(entries);
-      try { await writeGameCache({ id: "__manifest__", type: "manifest", entries }); } catch {}
-      validationMessage = `${games.length} versiones encontradas en GitHub.`;
+      updateLauncherVersion(data && data.launcherVersion);
+      try { await writeGameCache({ id: "__manifest__", type: "manifest", entries, launcherVersion: data && data.launcherVersion || "" }); } catch {}
     } catch {
       const stored = await loadStoredManifest();
-      if (!stored) throw new Error("No se pudo consultar GitHub ni hay un catálogo guardado. Conéctate una vez a Internet para cargar las versiones.");
-      games = normalizeGames(stored);
-      validationMessage = "Sin conexión. Se usa el catálogo guardado en este dispositivo.";
+      if (!stored) throw new Error("Conéctate para cargar las versiones.");
+      games = normalizeGames(stored.entries);
+      updateLauncherVersion(stored.launcherVersion);
+    } finally {
+      clearTimeout(timeout);
     }
   }
   renderList();
@@ -546,8 +625,9 @@ function updateDownloadControls() {
   const offlineOnly = devEnabled && devPrefs.offlineOnly;
   button.disabled = !game || downloadInProgress || (offlineOnly && !selectedCacheRecord);
   button.textContent = downloadInProgress ? "Descargando…" : selectedCacheRecord ? "Quitar descarga" : offlineOnly ? "Sin conexión" : "Descargar versión";
-  status.textContent = downloadInProgress ? status.textContent : selectedCacheRecord ? `Guardada en este dispositivo · ${formatSize(selectedCacheRecord.sizeBytes || (selectedCacheRecord.blob && selectedCacheRecord.blob.size) || 0)} · disponible sin conexión` : offlineOnly ? "Modo sin conexión: solo puedes usar versiones ya guardadas." : game ? `Descarga bajo demanda · ${formatSize(game.sizeBytes)}` : "Cargando catálogo de GitHub…";
-  $("downloadProgress").classList.toggle("hidden", !downloadInProgress);
+  status.textContent = selectedCacheRecord
+    ? `Guardada · ${formatSize(selectedCacheRecord.sizeBytes || (selectedCacheRecord.blob && selectedCacheRecord.blob.size) || 0)} · disponible sin conexión`
+    : offlineOnly ? "No descargada" : game ? `Tamaño ${formatSize(game.sizeBytes)}` : "Cargando versiones…";
 }
 
 async function downloadSelectedGame() {
@@ -556,22 +636,31 @@ async function downloadSelectedGame() {
   if (selectedCacheRecord) {
     if (!window.confirm(`¿Quitar ${game.displayName} del almacenamiento de este dispositivo?`)) return;
     try { await deleteGameCache(game.id); selectedCacheRecord = null; await refreshSelectedCache(); }
-    catch (error) { alert(error instanceof Error ? error.message : "No se pudo quitar la descarga."); }
+    catch { alert("No se pudo quitar la descarga."); }
     return;
   }
   if (devEnabled && devPrefs.offlineOnly) {
-    alert("El modo sin conexión solo permite versiones guardadas. Desactívalo para descargar una versión.");
+    alert("Activa la conexión para descargar esta versión.");
     return;
   }
   downloadInProgress = true;
+  downloadController = new AbortController();
+  const modal = $("downloadModal");
+  $("downloadTitle").textContent = `Descargando ${game.displayName}`;
+  $("downloadExpectedSize").textContent = formatSize(game.sizeBytes);
   $("downloadProgressBar").value = 0;
-  $("downloadProgressText").textContent = "Conectando con GitHub…";
+  $("downloadProgressText").textContent = `0 KB / ${formatSize(game.sizeBytes)} · 0%`;
+  $("cancelDownload").classList.remove("hidden");
+  $("closeDownloadModal").classList.add("hidden");
+  if (modal) modal.classList.remove("hidden");
   updateDownloadControls();
   try {
     if (navigator.storage && navigator.storage.persist) await navigator.storage.persist().catch(() => false);
-    const response = await fetch(game.url, { cache: "no-store" });
-    if (!response.ok) throw new Error(`GitHub respondió HTTP ${response.status}.`);
-    const total = Number(response.headers.get("Content-Length")) || game.sizeBytes;
+    const response = await fetch(game.url, { cache: "no-store", signal: downloadController.signal });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const responseTotal = Number(response.headers.get("content-length")) || 0;
+    const total = responseTotal || Number(game.sizeBytes) || 0;
+    if (responseTotal) $("downloadExpectedSize").textContent = formatSize(responseTotal);
     const chunks = [];
     let loaded = 0;
     if (response.body && response.body.getReader) {
@@ -581,22 +670,35 @@ async function downloadSelectedGame() {
         if (done) break;
         chunks.push(value);
         loaded += value.byteLength;
-        const pct = total ? Math.min(100, Math.round(loaded * 100 / total)) : 0;
+        const pct = total ? Math.min(99, Math.floor(loaded * 100 / total)) : 0;
         $("downloadProgressBar").value = pct;
-        $("downloadProgressText").textContent = `${formatSize(loaded)} de ${formatSize(total)} · ${pct}%`;
+        $("downloadProgressText").textContent = `${formatSize(loaded)} / ${formatSize(total)} · ${pct}%`;
       }
     } else {
-      const data = await response.arrayBuffer(); chunks.push(data); loaded = data.byteLength;
+      const data = await response.arrayBuffer();
+      chunks.push(data);
+      loaded = data.byteLength;
+      $("downloadProgressBar").value = 99;
+      $("downloadProgressText").textContent = `${formatSize(loaded)} / ${formatSize(total)} · 99%`;
     }
     const blob = new Blob(chunks, { type: "text/html;charset=utf-8" });
-    if (!blob.size) throw new Error("GitHub devolvió una versión vacía.");
+    if (!blob.size) throw new Error("Archivo vacío");
     await writeGameCache({ id: game.id, type: "game", displayName: game.displayName, blob, sizeBytes: blob.size, savedAt: Date.now(), sourceUrl: game.url });
     selectedCacheRecord = await readGameCache(game.id);
-    $("downloadProgressText").textContent = `${formatSize(blob.size)} guardados; disponible sin conexión.`;
+    $("downloadProgressBar").value = 100;
+    $("downloadTitle").textContent = `${game.displayName} lista`;
+    $("downloadProgressText").textContent = `Guardada · ${formatSize(blob.size)} · disponible sin conexión`;
+    $("cancelDownload").classList.add("hidden");
+    $("closeDownloadModal").classList.remove("hidden");
   } catch (error) {
-    alert(`No se pudo guardar la versión. ${error instanceof Error ? error.message : "Comprueba el espacio disponible y la conexión."}`);
+    const cancelled = error && error.name === "AbortError";
+    $("downloadTitle").textContent = cancelled ? "Descarga cancelada" : "No se pudo completar";
+    $("downloadProgressText").textContent = cancelled ? "" : error instanceof Error ? error.message : "Comprueba la conexión y el espacio disponible.";
+    $("cancelDownload").classList.add("hidden");
+    $("closeDownloadModal").classList.remove("hidden");
   } finally {
     downloadInProgress = false;
+    downloadController = null;
     updateDownloadControls();
     updateAccess();
   }
@@ -623,6 +725,16 @@ function closeGameOverlay(returnToLibrary = true) {
   if (currentGameObjectUrl) { URL.revokeObjectURL(currentGameObjectUrl); currentGameObjectUrl = ""; }
   if (localGameObjectUrl) { URL.revokeObjectURL(localGameObjectUrl); localGameObjectUrl = ""; }
   if (returnToLibrary) { $("settingsView").classList.add("hidden"); $("libraryView").classList.remove("hidden"); updateAccess(); }
+}
+
+function exitGameApp() {
+  closeGameOverlay(false);
+  try { window.close(); } catch {}
+  setTimeout(() => {
+    if (window.closed) return;
+    if (history.length > 1) history.back();
+    else window.location.replace("about:blank");
+  }, 180);
 }
 
 function readDevPreferences() {
@@ -733,8 +845,8 @@ function refreshActivationSettings() {
   const record = licenseCheck.record;
   const active = isActive();
   let state = "Inactiva";
-  if (productLicenseStatus === "checking") state = "Buscando .eagkey…";
-  else if (productLicenseStatus === "unreadable" || productLicenseStatus === "invalid") state = "Archivo .eagkey sin verificar";
+  if (productLicenseStatus === "checking") state = "Verificando…";
+  else if (hasPackagedLicense && !productLicenseData) state = "Licencia fija no válida";
   else if (validationPending) state = "Verificando…";
   else if (active) state = licenseCheck.offline ? "Activa sin conexión" : "Activa";
   else if (licenseCheck.status === "expired") state = "Vencida";
@@ -743,7 +855,7 @@ function refreshActivationSettings() {
   else if (licenseCheck.status === "invalid") state = "Clave no válida";
   else if (licenseCheck.status === "storage_error") state = "Error de almacenamiento";
   $("activationState").textContent = state;
-  $("activationMode").textContent = record ? String(record.type || "Licencia") : hasPackagedLicense ? (productLicenseData ? "Preconfigurada" : "Preconfigurada (inválida)") : productLicenseStatus === "unreadable" ? "Archivo pendiente" : "—";
+  $("activationMode").textContent = record ? String(record.type || "Licencia") : hasPackagedLicense ? "Fija" : "—";
   $("activationId").textContent = record ? String(record.id || "—") : productLicenseData ? String(productLicenseData.id || "—") : "—";
   $("activationExpiry").textContent = record ? licenseExpiryText(record) : "—";
   $("activationKey").textContent = maskActivationKey(code);
@@ -752,8 +864,8 @@ function refreshActivationSettings() {
   const oemLocked = hasOEMKeyLock();
   if (changeButton) {
     changeButton.classList.toggle("hidden", oemLocked);
-    changeButton.disabled = oemLocked || productLicenseStatus === "checking" || ((productLicenseStatus === "unreadable" || productLicenseStatus === "invalid") && !(devEnabled && devPrefs.unlockOEM));
-    changeButton.textContent = code ? "Ingresar o cambiar clave" : "Ingresar clave";
+    changeButton.disabled = oemLocked || productLicenseStatus === "checking";
+    changeButton.textContent = code ? "Cambiar clave" : "Ingresar clave";
   }
   const deactivateButton = $("settingsDeactivate");
   if (deactivateButton) deactivateButton.classList.add("hidden");
@@ -763,35 +875,21 @@ function refreshActivationSettings() {
 function updateAccess() {
   const active = isActive();
   const filePending = productLicenseStatus === "checking";
-  const fileBlocked = (productLicenseStatus === "unreadable" || productLicenseStatus === "invalid") && !(devEnabled && (devPrefs.skipLicense || devPrefs.unlockOEM));
+  const fileBlocked = hasPackagedLicense && !productLicenseData && !(devEnabled && (devPrefs.skipLicense || devPrefs.unlockOEM));
   const pending = validationPending || filePending;
-  $("statusText").textContent = filePending ? "Buscando .eagkey…" : pending ? "Verificando licencia…" : active ? (licenseCheck.offline ? "Licencia aceptada sin conexión" : "Licencia activa") : "Modo de vista";
+  $("statusText").textContent = filePending ? "Verificando…" : pending ? "Verificando licencia…" : active ? (licenseCheck.offline ? "Licencia activa sin conexión" : "Licencia activa") : "Modo de vista";
   $("activationCard").classList.toggle("activated", active && !pending);
-  $("activationTitle").textContent = filePending ? "Detectando licencia local…" : pending ? "Verificando licencia online…" : active ? "Launcher activado" : "Launcher en modo de vista";
-  const activeDescription = licenseCheck.offline
-    ? licenseCheck.message
-    : licenseCheck.record
-      ? `Licencia ${licenseCheck.record.id} confirmada. Puedes jugar.`
-      : "Acceso permitido por las opciones de desarrollador.";
-  const description = filePending
-    ? productLicenseMessage
-    : fileBlocked
-      ? productLicenseMessage
-      : pending
-        ? validationMessage
-        : active
-          ? activeDescription
-          : hasPackagedLicense
-            ? validationMessage || "La licencia preconfigurada no es válida; no se puede cambiar desde el launcher."
-            : validationMessage || "Introduce una clave desde Ajustes. Se validará en línea antes de habilitar Jugar.";
+  $("activationTitle").textContent = filePending ? "Iniciando…" : pending ? "Verificando licencia…" : active ? "Launcher activado" : "Launcher en modo de vista";
+  const activeDescription = licenseCheck.offline ? "Licencia válida sin conexión." : licenseCheck.record ? `Licencia ${licenseCheck.record.id} confirmada.` : "Acceso de desarrollador.";
+  const description = filePending ? "" : fileBlocked ? "Licencia fija no válida." : pending ? validationMessage : active ? activeDescription : hasPackagedLicense ? "Licencia fija no válida." : validationMessage || "Ingresa una clave en Ajustes.";
   $("activationDescription").textContent = description;
-  $("autoActivationMessage").textContent = filePending ? productLicenseMessage : validationMessage || "Consultando el registro central de GitHub…";
+  $("autoActivationMessage").textContent = filePending ? "" : validationMessage || "";
   $("autoActivationProgress").classList.toggle("hidden", !pending);
   $("openSettings").classList.toggle("hidden", pending);
   $("launch").disabled = !active || pending || fileBlocked || selectedCacheChecking || !selectedCacheRecord;
   $("launch").classList.toggle("hidden", pending);
   $("launchNote").classList.toggle("hidden", pending);
-  $("launchNote").textContent = fileBlocked ? productLicenseMessage : pending ? "Verificando…" : !selectedCacheRecord ? (selectedCacheChecking ? "Comprobando descarga…" : "Descarga esta versión para jugar, también sin conexión.") : active ? "Versión guardada y lista para iniciar." : "Valida una clave para poder jugar.";
+  $("launchNote").textContent = fileBlocked ? "Revisa la licencia." : pending ? "Verificando…" : !selectedCacheRecord ? (selectedCacheChecking ? "Comprobando descarga…" : "Descarga esta versión para jugar.") : active ? "Lista para iniciar." : "Valida una clave para jugar.";
   refreshActivationSettings();
   refreshDeveloperPanel();
   updateDownloadControls();
@@ -799,8 +897,8 @@ function updateAccess() {
 
 async function verifyConfiguredLicense() {
   if (devEnabled && devPrefs.skipLicense) {
-    licenseCheck = { status: "dev_override", record: null, message: "Validación omitida por opciones de desarrollador." };
-    validationMessage = licenseCheck.message;
+    licenseCheck = { status: "dev_override", record: null, message: "" };
+    validationMessage = "";
     validationPending = false;
     updateAccess();
     return;
@@ -810,17 +908,17 @@ async function verifyConfiguredLicense() {
     updateAccess();
     return;
   }
-  if ((productLicenseStatus === "unreadable" || productLicenseStatus === "invalid") && !(devEnabled && devPrefs.unlockOEM)) {
-    licenseCheck = { status: "file_error", record: null, message: productLicenseMessage };
-    validationMessage = productLicenseMessage;
+  if (hasOEMKeyLock() && !productLicenseData) {
+    licenseCheck = { status: "file_error", record: null, message: "Licencia fija no válida." };
+    validationMessage = licenseCheck.message;
     validationPending = false;
     updateAccess();
     return;
   }
   const code = currentKey();
   if (!code) {
-    licenseCheck = { status: "none", record: null, message: "No hay una clave configurada." };
-    validationMessage = hasPackagedLicense ? "La licencia preconfigurada no contiene una clave válida." : "No hay una clave configurada. Ingresa una clave desde Ajustes.";
+    licenseCheck = { status: "none", record: null, message: "" };
+    validationMessage = "";
     validationPending = false;
     updateAccess();
     return;
@@ -833,20 +931,20 @@ async function verifyConfiguredLicense() {
     return;
   }
   validationPending = true;
-  validationMessage = "Consultando el registro central de GitHub…";
+  validationMessage = "Verificando licencia…";
   updateAccess();
-  const result = await validateOnline(code);
-  saveOfflineLicenseSnapshot(code, result);
-  licenseCheck = result;
-  validationMessage = result.message;
+  const onlineResult = await validateOnline(code);
+  saveOfflineLicenseSnapshot(code, onlineResult);
+  licenseCheck = onlineResult.status === "offline" ? getOfflineLicensePermit(code) : onlineResult;
+  validationMessage = licenseCheck.message;
   validationPending = false;
   updateAccess();
 }
 
 function openActivation() {
-  if (hasOEMKeyLock() || productLicenseStatus === "checking" || ((productLicenseStatus === "unreadable" || productLicenseStatus === "invalid") && !(devEnabled && devPrefs.unlockOEM))) return;
-  $("activationHeading").textContent = isActive() ? "Cambiar clave de activación" : "Activar launcher";
-  $("submitActivation").textContent = isActive() ? "Cambiar clave" : "Verificar clave";
+  if (hasOEMKeyLock() || productLicenseStatus === "checking") return;
+  $("activationHeading").textContent = isActive() ? "Cambiar clave" : "Activar launcher";
+  $("submitActivation").textContent = "Verificar clave";
   $("keyInput").value = "";
   $("activationError").textContent = "";
   $("activationModal").classList.remove("hidden");
@@ -864,19 +962,19 @@ function closeActivation() {
 }
 
 async function submitActivation() {
-  if (hasOEMKeyLock() || validationPending || productLicenseStatus === "checking" || ((productLicenseStatus === "unreadable" || productLicenseStatus === "invalid") && !(devEnabled && devPrefs.unlockOEM))) return;
+  if (hasOEMKeyLock() || validationPending || productLicenseStatus === "checking") return;
   const code = $("keyInput").value.trim().toUpperCase();
   $("activationError").textContent = "";
   if (!code) {
-    $("activationError").textContent = "Escribe una clave para verificarla.";
+    $("activationError").textContent = "Escribe una clave.";
     return;
   }
   if (!saveCurrentKey(code)) {
-    $("activationError").textContent = "No se pudo guardar la clave en este dispositivo. Revisa el almacenamiento de la app.";
+    $("activationError").textContent = "No se pudo guardar la clave.";
     return;
   }
   validationPending = true;
-  validationMessage = "Consultando el registro central de GitHub…";
+  validationMessage = "Verificando licencia…";
   $("activationProgress").classList.add("visible");
   $("keyInput").disabled = true;
   $("submitActivation").disabled = true;
@@ -884,14 +982,20 @@ async function submitActivation() {
   $("closeActivation").disabled = true;
   $("activationMessage").textContent = validationMessage;
   updateAccess();
-  const result = devEnabled && devPrefs.offlineOnly ? getOfflineLicensePermit(code) : await validateOnline(code);
-  if (!(devEnabled && devPrefs.offlineOnly)) saveOfflineLicenseSnapshot(code, result);
+  let result;
+  if (devEnabled && devPrefs.offlineOnly) {
+    result = getOfflineLicensePermit(code);
+  } else {
+    const onlineResult = await validateOnline(code);
+    saveOfflineLicenseSnapshot(code, onlineResult);
+    result = onlineResult.status === "offline" ? getOfflineLicensePermit(code) : onlineResult;
+  }
   licenseCheck = result;
   validationMessage = result.message;
   validationPending = false;
   if (result.status === "valid") {
-    $("activationMessage").textContent = "Licencia válida. Launcher activado.";
-    await new Promise((resolve) => setTimeout(resolve, 350));
+    $("activationMessage").textContent = result.offline ? "Licencia válida sin conexión." : "Licencia válida.";
+    await new Promise((resolve) => setTimeout(resolve, 250));
     closeActivation();
   } else {
     $("activationProgress").classList.remove("visible");
@@ -899,7 +1003,7 @@ async function submitActivation() {
     $("submitActivation").disabled = false;
     $("cancelActivation").disabled = false;
     $("closeActivation").disabled = false;
-    $("activationError").textContent = result.message;
+    $("activationError").textContent = result.message || "No se pudo validar la licencia.";
   }
   updateAccess();
 }
@@ -958,8 +1062,8 @@ async function launchSelected() {
   if (!isActive() || validationPending) return;
   const game = games[selectedIndex];
   if (!game) return;
-  if (devEnabled && devPrefs.offlineOnly && !selectedCacheRecord) { alert("Modo sin conexión: descarga esta versión mientras tengas Internet."); return; }
-  if (!selectedCacheRecord || !selectedCacheRecord.blob) { alert("Esta versión todavía no está descargada. Usa «Descargar versión» y espera a que termine."); return; }
+  if (devEnabled && devPrefs.offlineOnly && !selectedCacheRecord) { alert("Descarga primero esta versión."); return; }
+  if (!selectedCacheRecord || !selectedCacheRecord.blob) { alert("Descarga esta versión antes de jugar."); return; }
   launchBlob(selectedCacheRecord.blob, game.displayName);
 }
 
@@ -987,7 +1091,11 @@ for (const [id, key] of [["devSkipLicense", "skipLicense"], ["devUnlockOEM", "un
   $(id).addEventListener("change", () => { if (!devEnabled) return; devPrefs[key] = $(id).checked; saveDevPreferences(); void verifyConfiguredLicense(); });
 }
 $("downloadGame").onclick = () => void downloadSelectedGame();
-$("closeGameOverlay").onclick = () => closeGameOverlay();
+$("cancelDownload").onclick = () => { if (downloadController) { $("downloadProgressText").textContent = "Cancelando…"; downloadController.abort(); } };
+$("closeDownloadModal").onclick = () => { if (!downloadInProgress) $("downloadModal").classList.add("hidden"); };
+$("downloadModal").addEventListener("click", (event) => { if (event.target === $("downloadModal") && !downloadInProgress) $("downloadModal").classList.add("hidden"); });
+document.addEventListener("keydown", (event) => { if (event.key === "Escape" && !downloadInProgress) $("downloadModal").classList.add("hidden"); });
+$("closeGameOverlay").onclick = exitGameApp;
 $("devUnlockTrigger").onclick = handleDeveloperTrigger;
 $("importLocalGame").onclick = () => $("localGamePicker").click();
 $("localGamePicker").addEventListener("change", (event) => { const file = event.currentTarget.files && event.currentTarget.files[0]; event.currentTarget.value = ""; void importOfflineGame(file); });
@@ -997,7 +1105,6 @@ $("cancelActivation").onclick = closeActivation;
 $("submitActivation").onclick = () => void submitActivation();
 $("keyInput").addEventListener("keydown", (event) => { if (event.key === "Enter") void submitActivation(); });
 $("selectProductLicense").onclick = () => $("productLicensePicker").click();
-$("continueWithoutProductLicense").onclick = continueWithoutProductLicense;
 $("productLicensePicker").addEventListener("change", (event) => {
   const input = event.currentTarget;
   const file = input.files && input.files[0];
@@ -1020,11 +1127,13 @@ updateAccess();
 window.addEventListener("load", () => {
   const splash = $("appSplash");
   const ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-  const minimumTime = new Promise((resolve) => setTimeout(resolve, 1800));
-  Promise.all([ready.catch(() => {}), minimumTime, productLicenseReady, catalogReady]).then(() => {
+  const minimumTime = new Promise((resolve) => setTimeout(resolve, 900));
+  Promise.all([ready.catch(() => {}), minimumTime]).then(() => {
     if (splash) splash.classList.add("is-hidden");
     updateAccess();
-    if (!(devEnabled && devPrefs.skipLicense)) setTimeout(() => void verifyConfiguredLicense(), 350);
+  });
+  productLicenseReady.then(() => {
+    if (!(devEnabled && devPrefs.skipLicense)) void verifyConfiguredLicense();
   });
 });
 
